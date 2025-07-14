@@ -1,271 +1,252 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Requisição de Compras - DELÍCIA GOURMET</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Contagem de Utensílios - Mercatto Café</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f5f5f5; display: flex; justify-content: center; padding: 30px; }
-    .container { background: #fff; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); max-width: 500px; width: 100%; padding: 25px; position: relative; }
-    h2 { text-align: center; color: #333; margin-bottom: 20px; }
-    label { display: block; margin: 12px 0 5px; font-weight: bold; }
-    input, select, textarea {
-      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      display: flex; justify-content: center;
     }
-    .autocomplete-list {
-      position: absolute; background: #fff; border: 1px solid #ddd; max-height: 150px;
-      overflow-y: auto; width: calc(100% - 52px); z-index: 10;
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
-    .autocomplete-item { padding: 8px; cursor: pointer; }
-    .autocomplete-item:hover { background: #f0f0f0; }
-    .unidades { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
-    .unidades button {
-      flex: 1 1 25%; padding: 8px; font-size: 14px; border: 1px solid #2196F3; background: #fff; border-radius: 20px; cursor: pointer;
+    h2 { text-align: center; margin-bottom: 20px; color: #333; }
+    label { font-weight: bold; display: block; margin-top: 12px; }
+    select, input, textarea {
+      width: 100%; padding: 10px; margin-top: 6px;
+      border: 1px solid #ddd; border-radius: 5px;
+      font-size: 16px;
     }
-    .unidades button.ativo { background: #2196F3; color: #fff; }
-    textarea { resize: vertical; min-height: 60px; }
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-    button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; }
+    .units { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .unit-chip {
+      padding: 6px 12px; border: 1px solid #aaa; border-radius: 20px;
+      cursor: pointer; user-select: none; font-size: 14px;
+    }
+    .unit-chip.active {
+      background: #4CAF50; color: #fff; border-color: #4CAF50;
+    }
+    button {
+      width: 100%; padding: 12px; margin: 5px 0;
+      font-weight: bold; border: none; border-radius: 5px; cursor: pointer;
+      font-size: 16px;
+    }
+    .btn-green { background: #4CAF50; color: #fff; }
     .btn-blue { background: #2196F3; color: #fff; }
     .btn-red { background: #f44336; color: #fff; }
-    #msg { text-align: center; margin-top: 10px; font-weight: bold; }
+    #msg { margin-top: 10px; font-weight: bold; text-align: center; }
+    .autocomplete { position: relative; }
+    .suggestions {
+      position: absolute; top: 100%; left: 0; right: 0;
+      border: 1px solid #ddd; background: #fff; z-index: 10;
+      max-height: 150px; overflow-y: auto;
+    }
+    .suggestions div {
+      padding: 8px; cursor: pointer;
+    }
+    .suggestions div:hover { background: #eee; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+    th, td { border: 1px solid #999; padding: 6px; text-align: center; }
   </style>
 </head>
 <body>
 <div class="container">
-  <h2>📋 Requisição de Compras DELÍCIA GOURMET</h2>
+  <h2>Contagem de Utensílios Mercatto Café</h2>
 
-  <label>Solicitante:</label>
-  <select id="solicitante">
-    <option value="">Selecione o solicitante</option>
-    <option value="ADM">ADM</option>
-    <option value="Ruan">Ruan</option>
-    <option value="Renata">Renata</option>
-    <option value="Lu">Lu</option>
-    <option value="Bruna">Bruna</option>
-    <option value="Renan">Renan</option>
-    <option value="Raimundo">Raimundo</option>
-  <option value="Cleide">Cleide</option>
-      <option value="Ricardo">Ricardo</option>
-    <option value="Larissa">Larissa</option>
-    <option value="Gabriel">Gabriel</option>
-    <option value="Valcir">Valcir</option>
-    <option value="Tailson">Tailson</option>
-    <option value="Dheure">Dheure</option>
-    <option value="Dorilson">Dorilson</option>
-    <option value="joane">joane</option>
-    <option value="Neval">Neval</option>
-    <option value="Agnaldo">Agnaldo</option>
-    <option value="Genison">Jenison</option>
-    <option value="Vanial">Vania</option>
-    <option value="Adriana">Adriana</option>
-    <option value="Ivaneide">Ivaneide</option>
-    <option value="Quiteria">Quiteria</option>
-    <option value="Luziânia">Luziânia</option>
-    <option value="Rosemeire">Rosemeire</option>
-    <option value="Wilma">Wilma</option>
-    <option value="Islane">Islane</option>
-    <option value="Marcelo">Marcelo</option>
-    <option value="Juciara">Juciara</option>
-    <option value="Aline Santos">Aline Santos</option>
-    <option value="Aline Rodrigues">Aline Rodrigues</option>
-
-    <option value="Geane">Geane</option>
-    <!-- ... -->
-  </select>
-
-  <label>Setor:</label>
-  <select id="setor">
-    <option value="">Selecione o setor</option>
-    <option value="Cozinha">Cozinha</option>
-   <option value="Limpeza">Limpeza</option>
-   <option value="Sushi">Sushi</option>
-   <option value="Garçons">Garçons</option>
-   <option value="Gerência">Gerência</option>
-   <option value="Pizzaria">Pizzaria</option>
-    <option value="Bar">Bar</option>
-    <option value="Caixa">Caixa</option>
+  <label>Responsável:</label>
+  <select id="solicitante" required>
+    <option value="">Selecione...</option>
+    <option value="Marizete">Marizete</option>
+    <option value="Gleidsa">Gleidsa</option>
+    <option value="Outros">Outros</option>
   </select>
 
   <label>Produto:</label>
-  <input type="text" id="item" placeholder="Digite o produto">
-  <div id="autocomplete-list" class="autocomplete-list"></div>
+  <div class="autocomplete">
+    <input type="text" id="produto" placeholder="Pesquise...">
+    <div id="suggestions" class="suggestions"></div>
+  </div>
 
   <label>Quantidade:</label>
   <input type="number" id="quantidade" min="1">
 
   <label>Unidade de Medida:</label>
-  <div class="unidades">
-    <button type="button" onclick="selecionarUnidade(this, 'UN.')">UN.</button>
-    <button type="button" onclick="selecionarUnidade(this, 'CX')">CX</button>
-    <button type="button" onclick="selecionarUnidade(this, 'L')">L</button>
-    <button type="button" onclick="selecionarUnidade(this, 'L')">PC</button>
-    <button type="button" onclick="selecionarUnidade(this, 'KG')">KG</button>
+  <div class="units">
+    <div class="unit-chip" data-unit="Un.">UN.</div>
+    <div class="unit-chip" data-unit="Cx">CX</div>
+    <div class="unit-chip" data-unit="L">L</div>
+    <div class="unit-chip" data-unit="Kg">KG</div>
+    <div class="unit-chip" data-unit="ML">ML</div>
+    <div class="unit-chip" data-unit="Pacote">PC</div>
   </div>
 
-  <label>Observações:</label>
-  <textarea id="observacoes" placeholder="Observações gerais"></textarea>
+  <button class="btn-green" onclick="adicionarItem()">Adicionar Item</button>
 
-  <!-- BOTÃO UNICO ENVIAR -->
-  <button class="btn-blue" onclick="enviarItem()">ENVIAR ITEM</button>
-  <button class="btn-red" onclick="limparTabela()">LIMPAR HISTÓRICO</button>
+  <h3>Itens:</h3>
+  <table id="historico">
+    <tr><th>Produto</th><th>Qtd</th><th>Unid</th><th>Ação</th></tr>
+  </table>
+
+  <label>Observações:</label>
+  <textarea id="observacoes" placeholder="Comentários gerais..."></textarea>
+
+  <button class="btn-blue" onclick="enviar()">Enviar Contagem</button>
+  <button class="btn-red" onclick="limpar()">Limpar Histórico</button>
 
   <p id="msg"></p>
-
-  <h3>Itens enviados nesta sessão:</h3>
-  <table id="historico">
-    <tr><th>Produto</th><th>Unidade</th><th>Qtd</th><th>Setor</th><th>Hora</th></tr>
-  </table>
 </div>
 
 <script>
-  const solicitanteSenhas = {
-    "ADM": "00",
-    "Ruan": "Ruan10",
-    "Renata": "Renata12",
-   "Lu": "Lu26",
-   "Bruna": "Bruna48",
-   "Renan": "Renan78",
-   "Raimundo": "Raimundo47",
-   "Cleide": "Cleide98",
-   "Ricardo": "Ricardo41",
-   "Larissa": "Larissa56",
-   "Valcir": "Valcir24",
-   "Tailson": "Tailson97",
-   "Dheure": "Dheure73",
-   "Neval": "Neval34",
-   "Agnaldo": "Agnaldo67",
-   "Genison": "Genison35",
-   "Dorilson": "Dorilson8",
-   "joane": "joane6",
-   "Vanial": "Vanial86",
-   "Adriana": "Adriana49",   
-   "Ivaneide": "Ivaneide46",
-   "Geane": "Geane83",
-   "Luziânia": "Luziânia8",
-   "Rosemeire": "Rosemeire30",
-   "Wilma": "Wilma87",
-   "Gabriel": "Gabriel5",
-   "Islane": "Islane78",
-   "Marcelo": "Marcelo75",
-   "Juciara": "Juciara35",
-   "Aline Santos": "Aline32",
-   "Aline Rodrigues": "Aline59",
-    "Quiteria": "Quiteria43"
-    // ... outros
-  };
+  const produtosBase = [
+    "Xícaras grande","Xícaras pequena","Pires grande","Pires pequeno",
+    "Talheres grande","Média e pequena","Garfo","Faca","Pratos",
+    "Pegador pequeno","Bowl pra salada de frutas grande","Bowl pra salada de frutas"
+  ];
+  let produtos = [...produtosBase];
 
-  let produtos = [];
+  const produtoInput = document.getElementById('produto');
+  const quantidadeInput = document.getElementById('quantidade');
+  const solicitanteSelect = document.getElementById('solicitante');
+  const observacoesInput = document.getElementById('observacoes');
+  const suggestions = document.getElementById('suggestions');
+  const msg = document.getElementById('msg');
+  const tabela = document.getElementById('historico');
+
   let unidadeSelecionada = '';
-  let enviados = [];
-  let senhaAutenticada = '';
 
-  const itemInput = document.getElementById('item');
-  const autocompleteList = document.getElementById('autocomplete-list');
-  const solicitanteInput = document.getElementById('solicitante');
+  produtoInput.addEventListener('input', renderSuggestions);
+  produtoInput.addEventListener('focus', renderSuggestions);
 
-  // Autocomplete de produtos
-  fetch("https://script.google.com/macros/s/YOUR_AUTOCOMPLETE_API/exec")
-    .then(r => r.json()).then(data => produtos = data);
-
-  itemInput.addEventListener('input', () => {
-    const val = itemInput.value.toLowerCase();
-    autocompleteList.innerHTML = '';
-    if (!val) return;
-    produtos.filter(p => p.toLowerCase().includes(val)).forEach(p => {
-      const div = document.createElement('div');
-      div.classList.add('autocomplete-item');
-      div.textContent = p;
-      div.onclick = () => { itemInput.value = p; autocompleteList.innerHTML = ''; };
-      autocompleteList.appendChild(div);
-    });
+  document.querySelectorAll('.unit-chip').forEach(chip => {
+    chip.onclick = () => {
+      unidadeSelecionada = chip.dataset.unit;
+      document.querySelectorAll('.unit-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    };
   });
 
-  document.addEventListener('click', e => { if (e.target !== itemInput) autocompleteList.innerHTML = ''; });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.autocomplete')) suggestions.innerHTML = '';
+  });
 
-  function selecionarUnidade(btn, valor) {
-    unidadeSelecionada = valor;
-    document.querySelectorAll('.unidades button').forEach(b => b.classList.remove('ativo'));
-    btn.classList.add('ativo');
+  function renderSuggestions() {
+    const historico = JSON.parse(localStorage.getItem('historico')) || [];
+    const adicionados = historico.map(item => item.produto);
+    produtos = produtosBase.filter(p => !adicionados.includes(p));
+
+    const filter = produtoInput.value.toLowerCase();
+    suggestions.innerHTML = '';
+    produtos
+      .filter(prod => prod.toLowerCase().includes(filter))
+      .forEach(prod => {
+        const div = document.createElement('div');
+        div.textContent = prod;
+        div.onclick = () => {
+          produtoInput.value = prod;
+          suggestions.innerHTML = '';
+        };
+        suggestions.appendChild(div);
+      });
   }
 
-  // Solicita senha assim que escolher solicitante
-  solicitanteInput.addEventListener('change', () => {
-    const solicitante = solicitanteInput.value.trim();
-    if (solicitante) {
-      const senha = prompt(`Digite a senha para ${solicitante}:`);
-      if (senha === solicitanteSenhas[solicitante]) {
-        senhaAutenticada = senha;
-        document.getElementById('msg').innerText = "✅ Solicitante autenticado!";
-      } else {
-        solicitanteInput.value = '';
-        senhaAutenticada = '';
-        document.getElementById('msg').innerText = "❌ Senha incorreta!";
-      }
+  carregar();
+
+  function adicionarItem() {
+    const produto = produtoInput.value.trim();
+    const quantidade = parseInt(quantidadeInput.value.trim());
+    if (!produto || !quantidade || !unidadeSelecionada) {
+      msg.innerText = 'Preencha todos os campos!';
+      return;
     }
-  });
+    const historico = JSON.parse(localStorage.getItem('historico')) || [];
+    historico.push({ produto, quantidade, unidade: unidadeSelecionada });
+    localStorage.setItem('historico', JSON.stringify(historico));
+    inserirLinha(produto, quantidade, unidadeSelecionada, historico.length - 1);
+    produtoInput.value = ''; quantidadeInput.value = '';
+    unidadeSelecionada = ''; document.querySelectorAll('.unit-chip').forEach(c => c.classList.remove('active'));
+    msg.innerText = 'Item adicionado!';
+  }
 
-  function enviarItem() {
-    const solicitante = solicitanteInput.value.trim();
-    const setor = document.getElementById('setor').value.trim();
-    const item = itemInput.value.trim();
-    const quantidade = document.getElementById('quantidade').value.trim();
-    const observacoes = document.getElementById('observacoes').value.trim();
+  function inserirLinha(produto, quantidade, unidade, index) {
+    const row = tabela.insertRow();
+    row.insertCell(0).innerText = produto;
+    row.insertCell(1).innerText = quantidade;
+    row.insertCell(2).innerText = unidade;
+    const cell = row.insertCell(3);
+    const btn = document.createElement('button');
+    btn.textContent = '🗑️'; btn.onclick = () => excluir(index);
+    cell.appendChild(btn);
+  }
 
-    if (!solicitante || !setor || !item || !quantidade || !unidadeSelecionada || !senhaAutenticada) {
-      document.getElementById('msg').innerText = "⚠️ Preencha todos os campos e autentique!";
+  function carregar() {
+    const historico = JSON.parse(localStorage.getItem('historico')) || [];
+    historico.forEach((item, i) => inserirLinha(item.produto, item.quantidade, item.unidade, i));
+  }
+
+  function excluir(index) {
+    const historico = JSON.parse(localStorage.getItem('historico')) || [];
+    historico.splice(index, 1);
+    localStorage.setItem('historico', JSON.stringify(historico));
+    while (tabela.rows.length > 1) tabela.deleteRow(1);
+    carregar();
+    msg.innerText = 'Item removido!';
+  }
+
+  function limpar() {
+    if (confirm('Tem certeza?')) {
+      localStorage.clear();
+      while (tabela.rows.length > 1) tabela.deleteRow(1);
+      msg.innerText = 'Histórico limpo!';
+    }
+  }
+
+  function enviar() {
+    const solicitante = solicitanteSelect.value.trim();
+    const observacoes = observacoesInput.value.trim();
+    const historico = JSON.parse(localStorage.getItem('historico')) || [];
+
+    if (!solicitante) {
+      msg.innerText = 'Selecione o responsável!';
+      return;
+    }
+    if (!historico.length) {
+      msg.innerText = 'Nenhum item adicionado!';
       return;
     }
 
-    const horaEnvio = new Date().toLocaleTimeString();
+    historico.forEach(item => {
+      const data = new URLSearchParams();
+      data.append('tipoFormulario', 'Requisição');
+      data.append('Item', item.produto);
+      data.append('Unidade', item.unidade);
+      data.append('Quantidade', item.quantidade);
+      data.append('Setor', 'Utensílios');
+      data.append('Solicitante', solicitante);
+      data.append('Observacoes', observacoes);
 
-    const data = new URLSearchParams();
-    data.append('tipoFormulario', 'Requisição');
-    data.append('Item', item);
-    data.append('Unidade', unidadeSelecionada);
-    data.append('Quantidade', quantidade);
-    data.append('Setor', setor);
-    data.append('Solicitante', solicitante);
-    data.append('Observacoes', observacoes);
-
-    fetch('https://script.google.com/macros/s/AKfycby8K9Z8pmysdQZWnFIbBEjpDL3QvzNLRCy1jp33MKY7c5a_yvtIhtCudL-CrCpwRfhxwA/exec', {
-      method: 'POST',
-      body: data
-    })
-    .then(r => r.text())
-    .then(txt => {
-      document.getElementById('msg').innerText = "✅ Item enviado!";
-      enviados.push({ item, unidade: unidadeSelecionada, quantidade, setor, hora: horaEnvio });
-      atualizarTabela();
-      itemInput.value = '';
-      document.getElementById('quantidade').value = '';
-      unidadeSelecionada = '';
-      document.querySelectorAll('.unidades button').forEach(b => b.classList.remove('ativo'));
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById('msg').innerText = "Enviado, favor confirmar com o setor o recebimento do pedido";
+      fetch('https://script.google.com/macros/s/AKfycbwOn-qLB3-H7QULVpeS1Y5WU2UZJ3Bc28ZuEF8FHsl5Z9Xh1uIbMkLEVaUl2onCHGA1/exec', {
+        method: 'POST',
+        body: data
+      })
+      .then(r => r.text())
+      .then(txt => console.log(txt))
+      .catch(err => console.error(err));
     });
-  }
 
-  function atualizarTabela() {
-    const tabela = document.getElementById('historico');
-    tabela.innerHTML = `<tr><th>Produto</th><th>Unidade</th><th>Qtd</th><th>Setor</th><th>Hora</th></tr>`;
-    enviados.forEach(i => {
-      const row = tabela.insertRow();
-      row.insertCell(0).innerText = i.item;
-      row.insertCell(1).innerText = i.unidade;
-      row.insertCell(2).innerText = i.quantidade;
-      row.insertCell(3).innerText = i.setor;
-      row.insertCell(4).innerText = i.hora;
-    });
-  }
-
-  function limparTabela() {
-    enviados = [];
-    atualizarTabela();
-    document.getElementById('msg').innerText = "🗑️ Histórico limpo!";
+    msg.innerText = '✅ Contagem enviada!';
+    localStorage.clear();
+    while (tabela.rows.length > 1) tabela.deleteRow(1);
+    produtoInput.value = '';
+    quantidadeInput.value = '';
+    document.querySelectorAll('.unit-chip').forEach(c => c.classList.remove('active'));
   }
 </script>
 </body>
